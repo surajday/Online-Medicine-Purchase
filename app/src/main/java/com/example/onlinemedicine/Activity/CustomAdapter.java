@@ -1,4 +1,4 @@
-package com.example.onlinemedicine;
+package com.example.onlinemedicine.Activity;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import com.example.onlinemedicine.R;
 
 public class CustomAdapter extends PagerAdapter {
 

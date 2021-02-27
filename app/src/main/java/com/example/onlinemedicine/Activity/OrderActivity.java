@@ -1,4 +1,4 @@
-package com.example.onlinemedicine;
+package com.example.onlinemedicine.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,6 +26,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.onlinemedicine.Models.City_Model;
+import com.example.onlinemedicine.Models.Doctor_Model;
+import com.example.onlinemedicine.Models.Hospital_Model;
+import com.example.onlinemedicine.Models.Model;
+import com.example.onlinemedicine.Models.Patient_Model;
+import com.example.onlinemedicine.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,20 +42,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OrderActivity extends AppCompatActivity {
-String city_name;
-RecyclerView medicine_list;
-RecyclerView.LayoutManager layoutManager;
-ArrayList<Model>arrayList;
-ArrayList<String>city_array_list_name;
-ArrayList<String>hosptalarrayList1_name;
-ArrayList<City_Model>city_array_list;
-ArrayList<Doctor_Model>doctorarrayList_id;
-ArrayList<Hospital_Model>hosptalarrayList1;
-ArrayList<Patient_Model>pasent_arraylist_id;
+    String city_name;
+    RecyclerView medicine_list;
+    RecyclerView.LayoutManager layoutManager;
+    ArrayList<Model>arrayList;
+    ArrayList<String>city_array_list_name;
+    ArrayList<String>hosptalarrayList1_name;
+    ArrayList<City_Model>city_array_list;
+    ArrayList<Doctor_Model>doctorarrayList_id;
+    ArrayList<Hospital_Model>hosptalarrayList1;
+    ArrayList<Patient_Model>pasent_arraylist_id;
     ArrayList<String>doctorarrayList,pasent_arraylist;
-TextView select_city_name,select_hospital_name,select_doctor_name,select_pasent_name;
-AlertDialog alertDialog;
-LinearLayout medicine_layout,go_to_cheakout,order_layout;
+    TextView select_city_name,select_hospital_name,select_doctor_name,select_pasent_name;
+    AlertDialog alertDialog;
+    LinearLayout medicine_layout,go_to_cheakout,order_layout;
+    String city_id,hospital_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,7 +113,7 @@ LinearLayout medicine_layout,go_to_cheakout,order_layout;
         select_city_name=findViewById(R.id.city_name);
         select_hospital_name=findViewById(R.id.select_hospital);
         select_doctor_name=findViewById(R.id.select_doctor);
-        select_pasent_name=findViewById(R.id.select_pasent);
+        select_pasent_name=findViewById(R.id.select_Patient);
         Get_All_City();
         select_city_name.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +129,7 @@ LinearLayout medicine_layout,go_to_cheakout,order_layout;
                         // String select_month=String.valueOf(charSequence[i]);
                         select_city_name.setText(city_array_list.get(i).getCity_name());
                         //Log.e( "onClick: ",String.valueOf(i+1) );
+                        city_id=city_array_list.get(i).getCity_id();
                         Get_Hospital_name(city_array_list.get(i).getCity_id());
 
 
@@ -143,11 +150,13 @@ LinearLayout medicine_layout,go_to_cheakout,order_layout;
                 builder.setItems(charSequence, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                       // Log.e( "onClick: ",String.valueOf(charSequence[i]));
-                      //  String select_month=String.valueOf(charSequence[i]);
+                        // Log.e( "onClick: ",String.valueOf(charSequence[i]));
+                        //  String select_month=String.valueOf(charSequence[i]);
                         select_hospital_name.setText(hosptalarrayList1.get(i).getHospital_name());
+                        hospital_id=hosptalarrayList1.get(i).getHospital_id();
+
                         Get_Doctor_Type(hosptalarrayList1.get(i).getHospital_id());
-                       // Log.e( "onClick: ",String.valueOf(i+1) );
+                        // Log.e( "onClick: ",String.valueOf(i+1) );
 
 
 
@@ -171,8 +180,9 @@ LinearLayout medicine_layout,go_to_cheakout,order_layout;
                         //Log.e( "onClick: ",String.valueOf(charSequence[i]));
                         String select_month=String.valueOf(charSequence[i]);
                         select_doctor_name.setText(doctorarrayList_id.get(i).getDoctor_name());
-                       // Log.e( "onClick: ",String.valueOf(i+1) );
-                        //Get_Patient_List(doctorarrayList_id.get(i).getDoctor_id());
+                        // Log.e( "onClick: ",String.valueOf(i+1) );
+                        Log.e("onClick: ", doctorarrayList_id.get(i).getDoctor_id());
+                        Get_Patient_List(doctorarrayList_id.get(i).getDoctor_id());
 
 
 
@@ -195,7 +205,7 @@ LinearLayout medicine_layout,go_to_cheakout,order_layout;
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Log.e( "onClick: ",String.valueOf(charSequence[i]));
                         String select_month=String.valueOf(charSequence[i]);
-                        select_pasent_name.setText(pasent_arraylist_id.get(i).getPatient_name());
+                        //select_pasent_name.setText(pasent_arraylist_id.get(i).getPatient_name());
                         Log.e( "onClick: ",String.valueOf(i+1) );
                         order_layout.setVisibility(View.GONE);
                         medicine_layout.setVisibility(View.VISIBLE);
@@ -213,52 +223,58 @@ LinearLayout medicine_layout,go_to_cheakout,order_layout;
 
     private void Get_Patient_List(String doctor_id) {
         pasent_arraylist.clear();
-     String url="https://foldertechsoftware.com/online_medicine/get_paitent.php";
-     StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-         @Override
-         public void onResponse(String response) {
-             try {
-                 JSONObject jsonObject=new JSONObject(response);
-                 String status=jsonObject.getString("status");
-                 if (status.equalsIgnoreCase("1"))
-                 {
-                     JSONArray jsonArray=jsonObject.getJSONArray("data");
-                     for (int i=0;i<jsonArray.length();i++)
-                     {
-                         JSONObject jsonObject1=jsonArray.getJSONObject(i);
-                         Patient_Model patient_model=new Patient_Model();
-                         patient_model.setPatient_name(jsonObject1.getString("patient_name"));
-                         patient_model.setPatient_id(jsonObject1.getString("patient_id"));
-                         pasent_arraylist.add(jsonObject1.getString("patient_name"));
-                     }
+        Log.e( "Id: ",hospital_id+doctor_id+city_id );
+        String url="https://foldertechsoftware.com/online_medicine/get_patient.php";
+        Log.e("Get_Patient_List: ", url);
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e( "onResponse: ", response);
+                try {
+                    JSONObject jsonObject=new JSONObject(response);
+                    String status=jsonObject.getString("status");
+                    if (status.equalsIgnoreCase("1"))
+                    {
+                        JSONArray jsonArray=jsonObject.getJSONArray("data");
+                        for (int i=0;i<jsonArray.length();i++)
+                        {
+                            JSONObject jsonObject1=jsonArray.getJSONObject(i);
+                            Patient_Model patient_model=new Patient_Model();
+                            patient_model.setPatient_name(jsonObject1.getString("patient_name"));
+                            patient_model.setPatient_id(jsonObject1.getString("patient_id"));
+                            pasent_arraylist.add(jsonObject1.getString("patient_name"));
+                        }
 
-                 }
-             } catch (JSONException e) {
-                 e.printStackTrace();
-             }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-         }
-     }, new Response.ErrorListener() {
-         @Override
-         public void onErrorResponse(VolleyError error) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
-         }
-     })
-     {
-         @Override
-         protected Map<String, String> getParams() throws AuthFailureError {
-             HashMap<String,String>map=new HashMap<>();
-             map.put("doctor_id",doctor_id);
-             return map;
-         }
-     };
-     Volley.newRequestQueue(getApplicationContext()).add(stringRequest);
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String>map=new HashMap<>();
+                Log.e("getParams: ",doctor_id+","+ hospital_id+","+city_id);
+                map.put("doctor_id",doctor_id);
+                map.put("hospital_id",hospital_id);
+                map.put("city_id",city_id);
+                return map;
+            }
+        };
+        Volley.newRequestQueue(getApplicationContext()).add(stringRequest);
 
     }
 
     private void Get_All_City() {
-    city_array_list_name.clear();
-     city_array_list.clear();
+        city_array_list_name.clear();
+        city_array_list.clear();
         ProgressDialog progressDialog=new ProgressDialog(this);
         progressDialog.setMessage("Please Wait");
         progressDialog.show();
@@ -344,6 +360,11 @@ LinearLayout medicine_layout,go_to_cheakout,order_layout;
             holder.add_to_cart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+
+
+
+
                     Toast.makeText(context, "Add To Cart", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -355,8 +376,8 @@ LinearLayout medicine_layout,go_to_cheakout,order_layout;
         }
 
         class ViewHolder extends RecyclerView.ViewHolder{
-           TextView medicine_name,price;
-           ImageView add_to_cart;
+            TextView medicine_name,price;
+            ImageView add_to_cart;
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 medicine_name=itemView.findViewById(R.id.cart_prtitle);
@@ -449,7 +470,7 @@ LinearLayout medicine_layout,go_to_cheakout,order_layout;
                             JSONObject jsonObject1=jsonArray.getJSONObject(i);
                             Doctor_Model doctor_model=new Doctor_Model();
                             doctor_model.setDoctor_name(jsonObject1.getString("doctor_name"));
-                           // doctor_model.setDoctor_id(jsonObject1.getString("doctor_id"));
+                            doctor_model.setDoctor_id(jsonObject1.getString("doctor_id"));
                             doctorarrayList.add(jsonObject1.getString("doctor_name"));
                             doctorarrayList_id.add(doctor_model);
 
@@ -475,6 +496,7 @@ LinearLayout medicine_layout,go_to_cheakout,order_layout;
                 HashMap<String,String>map=new HashMap<>();
                 Log.e( "getParams: ",hospital_name );
                 map.put("hospital_id",hospital_name);
+                map.put("city_id",city_id);
                 return map;
             }
         };

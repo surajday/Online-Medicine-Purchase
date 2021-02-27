@@ -1,10 +1,13 @@
-package com.example.onlinemedicine;
+package com.example.onlinemedicine.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.onlinemedicine.Activity.MainActivity;
+import com.example.onlinemedicine.R;
 
 public class PayActivity extends AppCompatActivity {
 
@@ -15,7 +18,7 @@ public class PayActivity extends AppCompatActivity {
     }
 
     public void go_to_back(View view) {
-        Intent back=new Intent(getApplicationContext(),MainActivity.class);
+        Intent back=new Intent(getApplicationContext(), MainActivity.class);
         startActivity(back);
         finish();
     }

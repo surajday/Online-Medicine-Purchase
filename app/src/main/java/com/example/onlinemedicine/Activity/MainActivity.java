@@ -1,4 +1,4 @@
-package com.example.onlinemedicine;
+package com.example.onlinemedicine.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -34,6 +34,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.onlinemedicine.Login.Login;
+import com.example.onlinemedicine.Models.City_Model;
+import com.example.onlinemedicine.Models.Hospital_Model;
+import com.example.onlinemedicine.R;
+import com.example.onlinemedicine.usersession.UserSession;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
@@ -64,6 +69,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      AlertDialog alertDialog;
      ImageView online_medine;
 
+
+     //
+    UserSession session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +87,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         arrayList1=new ArrayList<>();
         city_array_list_name=new ArrayList<>();
         city_array_list=new ArrayList<>();
+
+
+
+        session=new UserSession(getApplicationContext());
+
+
+        session.checkLogin();
+
+
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -94,6 +114,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         PagerAdapter pageadapter = new CustomAdapter(MainActivity.this,imageId);
         viewPager2.setAdapter(pageadapter);
 
+
+
+
         final Handler handler = new Handler();
         final Runnable Update = new Runnable() {
             public void run() {
@@ -103,6 +126,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 viewPager2.setCurrentItem(currentPage++, true);
             }
         };
+
+
 
         timer = new Timer(); // This will create a new Thread
         timer.schedule(new TimerTask() { // task to be scheduled
@@ -160,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         online_medine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go=new Intent(getApplicationContext(),OrderActivity.class);
+                Intent go=new Intent(getApplicationContext(), OrderActivity.class);
                 startActivity(go);
             }
         });
@@ -340,7 +365,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_logout) {
 
-            Intent mySuperIntent = new Intent(MainActivity.this,Login.class);
+            session.logoutUser();
+            Intent mySuperIntent = new Intent(MainActivity.this, Login.class);
             startActivity(mySuperIntent);
             finish();
 

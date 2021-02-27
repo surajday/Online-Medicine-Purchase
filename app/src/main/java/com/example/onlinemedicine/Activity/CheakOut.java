@@ -1,4 +1,4 @@
-package com.example.onlinemedicine;
+package com.example.onlinemedicine.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.onlinemedicine.Models.Model;
+import com.example.onlinemedicine.R;
 
 import java.util.ArrayList;
 
@@ -41,13 +44,13 @@ public class CheakOut extends AppCompatActivity {
     }
 
     public void go_to_back(View view) {
-        Intent back=new Intent(getApplicationContext(),MainActivity.class);
+        Intent back=new Intent(getApplicationContext(), MainActivity.class);
         startActivity(back);
         finish();
     }
 
     public void go_to_pay(View view) {
-        Intent back=new Intent(getApplicationContext(),PayActivity.class);
+        Intent back=new Intent(getApplicationContext(), PayActivity.class);
         startActivity(back);
         finish();
     }

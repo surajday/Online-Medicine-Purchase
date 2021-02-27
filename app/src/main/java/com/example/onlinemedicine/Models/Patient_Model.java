@@ -1,4 +1,4 @@
-package com.example.onlinemedicine;
+package com.example.onlinemedicine.Models;
 
 public class Patient_Model {
     public Patient_Model() {

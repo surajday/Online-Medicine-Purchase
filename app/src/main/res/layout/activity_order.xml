@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".OrderActivity">
+    tools:context="Activity.OrderActivity">
     <androidx.appcompat.widget.Toolbar
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -71,114 +71,114 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingTop="40dp">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/order_layout"
-    android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="38dp"
-                    android:layout_marginLeft="15dp"
-                    android:text="City"
-                    android:textColor="@color/blue"
-                    android:textSize="20dp" />
-                <TextView
-                    android:id="@+id/city_name"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="15dp"
-                    android:background="@drawable/editbg"
-                    android:drawableRight="@drawable/downarrow"
-                    android:paddingRight="5dp"
-                    android:hint="city name"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:textSize="20sp" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="15dp"
-                    android:text="Hospital"
-                    android:textColor="@color/blue"
-                    android:textSize="20dp" />
+                    android:id="@+id/order_layout"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="38dp"
+                        android:layout_marginLeft="15dp"
+                        android:text="City"
+                        android:textColor="@color/blue"
+                        android:textSize="20dp" />
+                    <TextView
+                        android:id="@+id/city_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/editbg"
+                        android:drawableRight="@drawable/downarrow"
+                        android:paddingRight="5dp"
+                        android:hint="city name"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:textSize="20sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:text="Hospital"
+                        android:textColor="@color/blue"
+                        android:textSize="20dp" />
 
-                <TextView
-                    android:id="@+id/select_hospital"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="15dp"
-                    android:background="@drawable/editbg"
-                    android:paddingRight="5dp"
-                    android:drawableRight="@drawable/downarrow"
-                    android:hint="Select Hospital"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:textSize="20sp" />
+                    <TextView
+                        android:id="@+id/select_hospital"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/editbg"
+                        android:paddingRight="5dp"
+                        android:drawableRight="@drawable/downarrow"
+                        android:hint="Select Hospital"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:textSize="20sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="15dp"
-                    android:text="Doctor"
-                    android:textColor="@color/blue"
-                    android:textSize="20dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:text="Doctor"
+                        android:textColor="@color/blue"
+                        android:textSize="20dp" />
 
-                <TextView
-                    android:id="@+id/select_doctor"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="5dp"
-                    android:paddingRight="5dp"
+                    <TextView
+                        android:id="@+id/select_doctor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:paddingRight="5dp"
 
-                    android:layout_marginRight="15dp"
-                    android:background="@drawable/editbg"
-                    android:drawableRight="@drawable/downarrow"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/editbg"
+                        android:drawableRight="@drawable/downarrow"
 
-                    android:hint="Select Doctor"
-                    android:inputType="number"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:textSize="20sp" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="15dp"
-                    android:text="Patients"
-                    android:textColor="@color/blue"
-                    android:textSize="20dp" />
+                        android:hint="Select Doctor"
+                        android:inputType="number"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:textSize="20sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:text="Patients"
+                        android:textColor="@color/blue"
+                        android:textSize="20dp" />
 
-                <TextView
-                    android:id="@+id/select_Patient"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="15dp"
+                    <TextView
+                        android:id="@+id/select_Patient"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="15dp"
 
-                    android:background="@drawable/editbg"
-                    android:drawableRight="@drawable/downarrow"
-                    android:hint="Select pacent"
+                        android:background="@drawable/editbg"
+                        android:drawableRight="@drawable/downarrow"
+                        android:hint="Select pacent"
 
-                    android:inputType="number"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="5dp"
-                    android:paddingBottom="10dp"
-                    android:textSize="20sp" />
-</LinearLayout>
+                        android:inputType="number"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="5dp"
+                        android:paddingBottom="10dp"
+                        android:textSize="20sp" />
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
