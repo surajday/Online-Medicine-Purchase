@@ -3,6 +3,7 @@ package com.example.onlinemedicine.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,6 +11,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,20 +28,26 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.onlinemedicine.Apis.URLs;
 import com.example.onlinemedicine.Models.City_Model;
 import com.example.onlinemedicine.Models.Doctor_Model;
 import com.example.onlinemedicine.Models.Hospital_Model;
 import com.example.onlinemedicine.Models.Model;
 import com.example.onlinemedicine.Models.Patient_Model;
 import com.example.onlinemedicine.R;
+import com.example.onlinemedicine.usersession.UserSession;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import es.dmoral.toasty.Toasty;
 
 public class OrderActivity extends AppCompatActivity {
     String city_name;
@@ -57,10 +65,43 @@ public class OrderActivity extends AppCompatActivity {
     AlertDialog alertDialog;
     LinearLayout medicine_layout,go_to_cheakout,order_layout;
     String city_id,hospital_id;
+
+
+    private static final long LIMIT = 10000000000L;
+    private static long last = 0;
+
+    UserSession session;
+    HashMap<String, String> user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
+
+
+        //code for toolbar setup
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_nav);
+        toolbar.setTitle("Your Medicine list");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
         medicine_list=findViewById(R.id.medicine_list);
         medicine_layout=findViewById(R.id.medicine_layout);
         order_layout=findViewById(R.id.order_layout);
@@ -76,6 +117,13 @@ public class OrderActivity extends AppCompatActivity {
         city_array_list=new ArrayList<>();
         hosptalarrayList1_name=new ArrayList<>();
         doctorarrayList_id=new ArrayList<>();
+
+
+        session=new UserSession(getApplicationContext());
+        user = new HashMap<>();
+        user=session.getUserDetails();
+
+
       /*  hosptalarrayList1.add("J.P Hospital");
         hosptalarrayList1.add("Hamidiya Hospital");
         hosptalarrayList1.add("LBS Hospital");
@@ -98,16 +146,26 @@ public class OrderActivity extends AppCompatActivity {
                 finish();
             }
         });
-        for (int i=0;i<10;i++)
-        {
-            Model model=new Model();
-            model.setName("CombiFlame");
-            model.setPrice("500");
+
+            Model model=new Model("Combiflame","280","500","123");
             arrayList.add(model);
+
+        Model model1=new Model("Paracetamol","100","150","123");
+        arrayList.add(model1);
+
+        Model model2=new Model("Pentop 40","150","210","123");
+        arrayList.add(model2);
+
+        Model model3=new Model("Petril md","120","200","123");
+        arrayList.add(model3);
+
+        Model model4=new Model("Telma 40","35","80","123");
+        arrayList.add(model4);
+
             MedicineAdapter medicineAdapter=new MedicineAdapter(getApplicationContext(),arrayList);
             medicine_list.setAdapter(medicineAdapter);
 
-        }
+
 
 
         select_city_name=findViewById(R.id.city_name);
@@ -270,6 +328,15 @@ public class OrderActivity extends AppCompatActivity {
         };
         Volley.newRequestQueue(getApplicationContext()).add(stringRequest);
 
+
+    }
+
+    public Long generateRandomNumbers(){
+        long id = System.currentTimeMillis() % LIMIT;
+        if ( id <= last ) {
+            id = (last + 1) % LIMIT;
+        }
+        return last = id;
     }
 
     private void Get_All_City() {
@@ -357,17 +424,77 @@ public class OrderActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.medicine_name.setText(arrayList.get(position).getName());
             holder.price.setText(arrayList.get(position).getPrice());
+            holder.price.setPaintFlags(holder.price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.cart_DiscPrice.setText(arrayList.get(position).getDiscprice());
             holder.add_to_cart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
+                    String userEmail=user.get("email");
+
+                   /* Toast.makeText(context, arrayList.get(position).getName()+" "
+                            +arrayList.get(position).getPrice()+" "
+                            +arrayList.get(position).getDiscprice()+" "
+                            +arrayList.get(position).getMedicineid(), Toast.LENGTH_LONG).show();*/
 
 
+                    AddToCartMedicines(userEmail,arrayList.get(position).getName(),arrayList.get(position).getPrice(),arrayList.get(position)
+                            .getDiscprice(),String.valueOf(generateRandomNumbers()));
 
-
-                    Toast.makeText(context, "Add To Cart", Toast.LENGTH_SHORT).show();
                 }
             });
+        }
+
+        //Adding Medicine To cart
+
+        private void AddToCartMedicines(String Userid,String Medicinename,String Actualprice,String Discprice,String Medicineid) {
+
+            StringRequest stringRequest=new StringRequest(Request.Method.POST, URLs.ADD_CART, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.e( "onResponse: ", response);
+                    try {
+                        JSONObject jsonObject=new JSONObject(response);
+                        String status=jsonObject.getString("status");
+                        if (status.equalsIgnoreCase("1")){
+
+                            Toasty.success(getApplicationContext(),"Added To Cart",Toast.LENGTH_SHORT,true).show();
+
+                        }else{
+
+                            Toasty.error(getApplicationContext(),"Error",Toast.LENGTH_SHORT,true).show();
+
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            })
+            {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    HashMap<String,String>map=new HashMap<>();
+                    map.put("user_id",Userid);
+                    map.put("id",Medicineid);
+                    map.put("name",Medicinename);
+                    map.put("price",Actualprice);
+                    map.put("discount_price",Discprice);
+
+                    return map;
+                }
+            };
+            Volley.newRequestQueue(getApplicationContext()).add(stringRequest);
+
+
+
+
         }
 
         @Override
@@ -376,13 +503,14 @@ public class OrderActivity extends AppCompatActivity {
         }
 
         class ViewHolder extends RecyclerView.ViewHolder{
-            TextView medicine_name,price;
+            TextView medicine_name,price,cart_DiscPrice;
             ImageView add_to_cart;
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 medicine_name=itemView.findViewById(R.id.cart_prtitle);
                 price=itemView.findViewById(R.id.cart_prprice);
                 add_to_cart=itemView.findViewById(R.id.addcard);
+                cart_DiscPrice=itemView.findViewById(R.id.cart_DiscPrice);
             }
         }
     }

@@ -107,7 +107,7 @@
         android:ems="10"
         android:fontFamily="@font/roboto_light"
         android:hint="Phone Number."
-        android:inputType="textEmailAddress"
+        android:inputType="phone"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,11 +1,9 @@
-package com.example.onlinemedicine.Login;
+package com.example.onlinemedicine.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -16,12 +14,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.onlinemedicine.Activity.ForgotPassword;
-import com.example.onlinemedicine.Activity.MainActivity;
 import com.example.onlinemedicine.Apis.URLs;
-import com.example.onlinemedicine.Models.User;
+import com.example.onlinemedicine.Login.Login;
 import com.example.onlinemedicine.R;
-import com.example.onlinemedicine.SharedPrefrences.SharedPrefManager;
 import com.example.onlinemedicine.SignUp.SignUpActivity;
 import com.example.onlinemedicine.VollySingletonClasses.VolleySingleton;
 import com.example.onlinemedicine.usersession.UserSession;
@@ -35,7 +30,8 @@ import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 
-public class Login extends AppCompatActivity {
+public class ForgotPassword extends AppCompatActivity {
+
 
     EditText UserEmail,UserPassword;
     String check,email,password;
@@ -44,7 +40,7 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_forgot_password);
         UserEmail=findViewById(R.id.inputEmail);
         UserPassword=findViewById(R.id.inputPassword);
 
@@ -62,7 +58,7 @@ public class Login extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(), SignUpActivity.class));
     }
 
-    public void CheckLogin(View view) {
+    public void UpdatePassword(View view) {
         if(validateEmail() && validatePass()){
 
 
@@ -81,7 +77,7 @@ public class Login extends AppCompatActivity {
     private void LoginUser(String email, String password) {
 
 
-        final KProgressHUD progressDialog=  KProgressHUD.create(Login.this)
+        final KProgressHUD progressDialog=  KProgressHUD.create(ForgotPassword.this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel("Please wait")
                 .setCancellable(false)
@@ -89,7 +85,7 @@ public class Login extends AppCompatActivity {
                 .setDimAmount(0.5f)
                 .show();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_LOGIN,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.FORGOT_PASSWORD,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -106,7 +102,7 @@ public class Login extends AppCompatActivity {
 
 
                                 progressDialog.dismiss();
-                                Toasty.error(getApplicationContext(),"Login Failed", Toast.LENGTH_SHORT,true).show();
+                                Toasty.error(getApplicationContext(),"Updating Failed", Toast.LENGTH_SHORT,true).show();
 
                                 /*User user = new User(
                                         userJson.getInt("id"),
@@ -116,9 +112,9 @@ public class Login extends AppCompatActivity {
                                 );*/
 
                                 //storing the user in shared preferences
-                            //    SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
+                                //    SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
 
-                           //     finish();
+                                //     finish();
 
 
                             }
@@ -126,12 +122,10 @@ public class Login extends AppCompatActivity {
                             if (status.equalsIgnoreCase("1")){
 
                                 progressDialog.dismiss();
-                                Toasty.success(getApplicationContext(),"Login successful",Toast.LENGTH_SHORT,true).show();
+                                Toasty.success(getApplicationContext(),"Passoword Updated Successfully",Toast.LENGTH_SHORT,true).show();
                                 session.createLoginSession(jsonObject.getString("name"),jsonObject.getString("email"),jsonObject.getString("contact"),"");
-
-
                                 finish();
-                                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                                startActivity(new Intent(getApplicationContext(),Login.class));
 
                             }
 
@@ -196,9 +190,10 @@ public class Login extends AppCompatActivity {
 
     public void sendToForgotPass(View view) {
 
-       finish();
-       startActivity(new Intent(getApplicationContext(), ForgotPassword.class));
+        finish();
+        startActivity(new Intent(getApplicationContext(), ForgotPassword.class));
     }
+
 
 
    /* TextWatcher emailWatcher = new TextWatcher() {

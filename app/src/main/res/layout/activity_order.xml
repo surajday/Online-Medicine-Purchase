@@ -11,53 +11,29 @@
         android:layout_width="match_parent"
         android:id="@+id/toolbar_nav"
         android:layout_height="50sp"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:background="@color/colorPrimary">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10sp"
-            android:layout_marginBottom="5sp"
-            android:weightSum="5">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:orientation="horizontal"
-                android:layout_marginBottom="8sp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Book Medicine"
-                    android:onClick="go_to_back"
-                    android:drawableLeft="@drawable/back"
-                    android:textColor="#ffff"
-                    android:textStyle="bold|italic"
-                    android:paddingLeft="12sp"
-                    android:textSize="15sp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:id="@+id/go_to_cheakout"
-                android:gravity="right"
                 android:orientation="horizontal"
-                android:layout_marginBottom="8sp">
+                android:layout_marginBottom="0sp">
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:gravity="end"
+                    android:layout_marginLeft="80dp"
                     android:src="@drawable/addtocard"/>
-            </LinearLayout>
+
         </LinearLayout>
 
     </androidx.appcompat.widget.Toolbar>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_height="match_parent"
         >
 
 
@@ -68,9 +44,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:paddingTop="40dp">
+                android:paddingTop="10dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -81,6 +57,8 @@
                         android:layout_height="38dp"
                         android:layout_marginLeft="15dp"
                         android:text="City"
+                        android:letterSpacing="0.3"
+                        android:fontFamily="@font/robotobold"
                         android:textColor="@color/blue"
                         android:textSize="20dp" />
                     <TextView
@@ -88,7 +66,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="0dp"
                         android:layout_marginRight="15dp"
                         android:background="@drawable/editbg"
                         android:drawableRight="@drawable/downarrow"
@@ -96,6 +74,7 @@
                         android:hint="city name"
                         android:paddingLeft="10dp"
                         android:paddingTop="10dp"
+                        android:fontFamily="@font/roboto_light"
                         android:paddingBottom="10dp"
                         android:textSize="20sp" />
                     <TextView
@@ -104,6 +83,8 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
                         android:text="Hospital"
+                        android:letterSpacing="0.3"
+                        android:fontFamily="@font/robotobold"
                         android:textColor="@color/blue"
                         android:textSize="20dp" />
 
@@ -114,6 +95,7 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="15dp"
+                        android:fontFamily="@font/roboto_light"
                         android:background="@drawable/editbg"
                         android:paddingRight="5dp"
                         android:drawableRight="@drawable/downarrow"
@@ -129,6 +111,8 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
                         android:text="Doctor"
+                        android:letterSpacing="0.3"
+                        android:fontFamily="@font/robotobold"
                         android:textColor="@color/blue"
                         android:textSize="20dp" />
 
@@ -139,7 +123,7 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="5dp"
                         android:paddingRight="5dp"
-
+                        android:fontFamily="@font/roboto_light"
                         android:layout_marginRight="15dp"
                         android:background="@drawable/editbg"
                         android:drawableRight="@drawable/downarrow"
@@ -156,6 +140,8 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
                         android:text="Patients"
+                        android:letterSpacing="0.3"
+                        android:fontFamily="@font/robotobold"
                         android:textColor="@color/blue"
                         android:textSize="20dp" />
 
@@ -166,12 +152,11 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginBottom="10dp"
                         android:layout_marginTop="5dp"
+                        android:fontFamily="@font/roboto_light"
                         android:layout_marginRight="15dp"
-
                         android:background="@drawable/editbg"
                         android:drawableRight="@drawable/downarrow"
                         android:hint="Select pacent"
-
                         android:inputType="number"
                         android:paddingLeft="10dp"
                         android:paddingTop="10dp"
@@ -181,15 +166,15 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
                     android:visibility="gone"
                     android:id="@+id/medicine_layout"
                     android:orientation="vertical">
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:id="@+id/medicine_list"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="match_parent"/>
                 </LinearLayout>
 
             </LinearLayout>

@@ -1,9 +1,37 @@
 package com.example.onlinemedicine.Models;
 
 public class Model {
-    String name;
+    String name,discprice,price,medicineid;
+
+
+
+
 
     public Model() {
+
+    }
+
+    public Model(String name, String discprice, String price, String medicineid) {
+        this.name = name;
+        this.discprice = discprice;
+        this.price = price;
+        this.medicineid = medicineid;
+    }
+
+    public String getMedicineid() {
+        return medicineid;
+    }
+
+    public void setMedicineid(String medicineid) {
+        this.medicineid = medicineid;
+    }
+
+    public String getDiscprice() {
+        return discprice;
+    }
+
+    public void setDiscprice(String discprice) {
+        this.discprice = discprice;
     }
 
     public String getName() {
@@ -22,5 +50,5 @@ public class Model {
         this.price = price;
     }
 
-    String price;
+
 }

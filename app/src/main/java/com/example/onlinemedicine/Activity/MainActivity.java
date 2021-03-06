@@ -115,6 +115,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         viewPager2.setAdapter(pageadapter);
 
 
+        navUsername.setText(session.getUserDetails().get("name"));
+        useremailid.setText(session.getUserDetails().get("email"));
+
+
+
 
 
         final Handler handler = new Handler();

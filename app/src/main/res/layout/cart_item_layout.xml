@@ -9,13 +9,13 @@
         android:orientation="horizontal"
         android:weightSum="3">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:layout_marginLeft="5dp"
             android:id="@+id/image_cartlist" android:layout_width="0dp"
-            android:layout_height="80dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/medicine1"/>
+            android:src="@drawable/medicine"/>
 
         <LinearLayout  android:id="@+id/layout_item_desc"
             android:layout_width="0dp"
@@ -35,7 +35,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Denim Shirt"
-                    android:gravity="center_vertical"
+                    android:fontFamily="@font/robotobold"
+                    android:gravity="bottom"
                     android:textSize="@dimen/text_size_xmedium"
                     android:textStyle="bold"
                     android:layout_weight="9"/>
@@ -50,26 +51,51 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/cart_prprice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rs. 8,999"
-                android:textSize="@dimen/text_size_xmedium"
-                android:textColor="#4CAF50"
-                android:layout_marginTop="@dimen/margin_small"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Delivery charge: FREE"
-                android:textSize="@dimen/text_size_small"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/cart_prprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rs. 8,999"
+                    android:textSize="@dimen/text_size_xmedium"
+                    android:fontFamily="@font/roboto_light"
+                    android:textColor="#4CAF50"
+                    android:layout_marginTop="@dimen/margin_small"/>
+
+                <TextView
+                    android:id="@+id/cart_DiscPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rs. 8,999"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/robotobold"
+                    android:textSize="@dimen/text_size_xmedium"
+                    android:textColor="#4CAF50"
+                    android:layout_marginTop="@dimen/margin_small"/>
+
+            </LinearLayout>
+
+
+
 
             <TextView
                 android:id="@+id/cart_prcount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:text="Qty: 1"
+                android:text="Qty: 10 Tablets"
+                android:fontFamily="@font/roboto_light"
+                android:textSize="@dimen/text_size_small"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_light"
+                android:text="Delivery charge: FREE"
                 android:textSize="@dimen/text_size_small"/>
 
         </LinearLayout>

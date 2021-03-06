@@ -12,7 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OnlineMedicine"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.OtpActivity"></activity>
+        <activity android:name=".Activity.ForgotPassword"></activity>
+        <activity android:name=".Activity.PaymentOptions" />
+        <activity android:name=".Activity.OrderDetail" />
+        <activity android:name=".Activity.OtpActivity" />
         <activity android:name=".SignUp.SignUpActivity" />
         <activity android:name=".Login.Login" />
         <activity android:name=".Activity.PayActivity" />

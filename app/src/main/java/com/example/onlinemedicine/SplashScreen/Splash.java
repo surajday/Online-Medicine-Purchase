@@ -27,14 +27,14 @@ public class Splash extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent mySuperIntent = new Intent(Splash.this, Login.class);
+                Intent mySuperIntent = new Intent(Splash.this, MainActivity.class);
                 startActivity(mySuperIntent);
                 finish();
 
                 //This 'finish()' is for exiting the app when back button pressed from Home page which is ActivityHome
                 finish();
 
-              session.checkLogin();
+
 
 
             }
