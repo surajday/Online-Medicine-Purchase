@@ -70,11 +70,11 @@ public class SignUpActivity extends AppCompatActivity {
         awesomeValidation.addValidation(this, R.id.inputPassword, "^[2-9]{2}[0-9]{8}$", R.string.passworderror);
 */
 
-      /*  Username.addTextChangedListener(nameWatcher);
+        Username.addTextChangedListener(nameWatcher);
         UserEmail.addTextChangedListener(emailWatcher);
         UserPassword.addTextChangedListener(passWatcher);
         UserConformPassword.addTextChangedListener(cnfpassWatcher);
-        UserPhoneNumber.addTextChangedListener(numberWatcher);*/
+        UserPhoneNumber.addTextChangedListener(numberWatcher);
 
         //take user to already login page
 
